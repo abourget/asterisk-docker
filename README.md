@@ -16,11 +16,11 @@ Extract sample config (optional) with:
 
 And run with:
 
-    sudo docker run -ti --rm --name="asterisk13" --net=host -v `pwd`/etc_asterisk:/etc/asterisk -v `pwd`/voicemail:/var/spool/asterisk/voicemail -v `pwd`/monitor:/var/spool/asterisk/monitor -v `pwd`/run:/var/run/asterisk asterisk13
+    sudo docker run -ti --rm --name="asterisk13" --net=host -v `pwd`/etc_asterisk:/etc/asterisk -v `pwd`/voicemail:/var/spool/asterisk/voicemail -v `pwd`/spool:/var/spool/asterisk -v `pwd`/run:/var/run/asterisk asterisk13
 
 or replace `-ti --rm` with `-d` to spin in server mode.
 
-You can see the asterisk logs through:
+In daemon mode, you can see the asterisk logs through:
 
     sudo docker logs -f asterisk13
 

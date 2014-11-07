@@ -18,6 +18,7 @@ RUN asterisk-13.0.0/contrib/scripts/install_prereq install
 WORKDIR /root/asterisk-13.0.0
 RUN ./configure
 RUN make menuselect.makeopts
+RUN menuselect/menuselect --enable DONT_OPTIMIZE --enable BETTER_BACKTRACES menuselect.makeopts
 RUN make
 RUN make install
 RUN make samples

@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "Ok, hit ENTER to start asterisk"
-read
-
 /etc/init.d/asterisk start
 sleep 1
 rasterisk -cgvvv

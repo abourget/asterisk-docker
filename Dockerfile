@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 
 RUN apt-get update
-RUN apt-get install -y build-essential wget
+RUN apt-get install -y build-essential wget aptitude gdb strace
 WORKDIR /root
 RUN wget http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-13.0.0.tar.gz
 RUN wget http://www.pjsip.org/release/2.2.1/pjproject-2.2.1.tar.bz2
@@ -12,10 +12,12 @@ RUN cd pjproject-2.2.1 && \
     make && \
     make install && \
     ldconfig
+
 RUN tar -zxvf asterisk-13.0.0.tar.gz
-RUN apt-get install -y aptitude
 RUN asterisk-13.0.0/contrib/scripts/install_prereq install
 WORKDIR /root/asterisk-13.0.0
+RUN wget https://issues.asterisk.org/jira/secure/attachment/51445/ASTERISK-24498-13.diff
+RUN patch -p0 < ASTERISK-24498-13.diff
 RUN ./configure
 RUN make menuselect.makeopts
 RUN menuselect/menuselect --enable DONT_OPTIMIZE --enable BETTER_BACKTRACES menuselect.makeopts
@@ -23,8 +25,8 @@ RUN make
 RUN make install
 RUN make samples
 RUN make config
-ADD run.sh /run.sh
 
+ADD run.sh /run.sh
 CMD ["/run.sh"]
 
 # Run with:
